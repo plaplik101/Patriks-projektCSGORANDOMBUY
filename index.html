@@ -2,7 +2,6 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <!-- För mobilanpassning -->
   <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
   <title>CS:GORandomBuy</title>
   <link rel="stylesheet" type="text/css" href="style.css">
@@ -25,22 +24,24 @@
     <button onclick="changeImage()">RandomBuy</button>
 
     <script>
-    // Bilden som byts ut mot vapen bilderna.
   var myImage = document.getElementById('mainImage');
 
-  // En img array för respektive sida.
   var imageArrayCT = ["img/pistol/deagle.png", "img/pistol/dualberettas.png", "img/pistol/fiveseven.png", "img/pistol/p250.png", "img/smg/mp7.png", "img/smg/mp9.png", "img/smg/p90.png", "img/smg/ppbizon.png", "img/smg/ump45.png", "img/rifle/aug.png", "img/rifle/awp.png", "img/rifle/famas.png", "img/rifle/m4a4.png",
   "img/rifle/scar20.png", "img/rifle/ssg08.png", "img/heavy/m249.png", "img/heavy/mag7.png", "img/heavy/negev.png", "img/heavy/nova.png", "img/heavy/xm1014.png"];
 
   var imageArrayT = ["img/pistol/deagle.png", "img/pistol/dualberettas.png", "img/pistol/tec9.png", "img/pistol/p250.png", "img/smg/mp7.png", "img/smg/mac10.png", "img/smg/p90.png", "img/smg/ppbizon.png", "img/smg/ump45.png", "img/rifle/sg553.png", "img/rifle/awp.png", "img/rifle/galil.png", "img/rifle/ak47.png",
   "img/rifle/g3sg1.png", "img/rifle/ssg08.png", "img/heavy/m249.png", "img/heavy/sawedoff.png", "img/heavy/negev.png", "img/heavy/nova.png", "img/heavy/xm1014.png"];
 
-// En Cost array för respektive sida.
+
   var ctCost = [700, 400, 500, 300, 1500, 1250, 2350, 1400, 1200, 3300, 4750, 2250, 3100, 5000, 1700, 5200, 1300, 1700, 1050, 2000];
   var tCost = [700, 400, 500, 300, 1500, 1050, 2350, 1400, 1200, 2750, 4750, 2000, 2700, 5000, 1700, 5200, 1100, 1700, 1050, 2000];
 
 function fixArrayCostCT(){
-    var balance = document.getElementById('balance').value;
+  var balance = document.getElementById('balance').value;
+    if (balance >= 300) {
+
+
+
     var newCtCost = [];
 
     for (var i = 0; i < ctCost.length; i++) {
@@ -48,54 +49,77 @@ function fixArrayCostCT(){
           newCtCost.push(ctCost[i]);
       }
     }
+    return newCtCost;
+    }
+else {
+  alert("Too low balance!");
+}
 
-return newCtCost;
+
 }
 function fixArrayImageCT(){
-    var balance = document.getElementById('balance').value;
-    var newCtCost = [];
+  var balance = document.getElementById('balance').value
+    if (balance >= 300){
+      var newCtCost = [];
 
-    for (var i = 0; i < ctCost.length; i++) {
-      if(ctCost[i] <= balance){
-          newCtCost.push(imageArrayCT[i]);
+      for (var i = 0; i < ctCost.length; i++) {
+        if(ctCost[i] <= balance){
+            newCtCost.push(imageArrayCT[i]);
+        }
       }
+
+  return newCtCost;
+    }
+    else{
+      alert("Too low balance!");
     }
 
-return newCtCost;
+
 }
 
 
 
 function fixArrayCostT(){
     var balance = document.getElementById('balance').value;
-    var newTCost = [];
+    if (balance >= 300) {
+      var newTCost = [];
 
-    for (var i = 0; i < tCost.length; i++) {
-      if(tCost[i] <= balance){
-          newTCost.push(tCost[i]);
+      for (var i = 0; i < tCost.length; i++) {
+        if(tCost[i] <= balance){
+            newTCost.push(tCost[i]);
+        }
       }
+
+  return newTCost;
+    }
+    else {
+      alert("Too low balance!");
     }
 
-return newTCost;
 }
 
 
 function fixArrayImageT(){
     var balance = document.getElementById('balance').value;
-    var newTCost = [];
+    if (balance >= 300) {
+      var newTCost = [];
 
-    for (var i = 0; i < tCost.length; i++) {
-      if(tCost[i] <= balance){
-          newTCost.push(imageArrayT[i]);
+      for (var i = 0; i < tCost.length; i++) {
+        if(tCost[i] <= balance){
+            newTCost.push(imageArrayT[i]);
+        }
       }
+
+  return newTCost;
+    }
+    else {
+      alert("Too low balance!");
     }
 
-return newTCost;
 }
 
 
 function changeImage(){
-  // Om selectorn visar "CT"
   if(document.getElementById('team').value == "ct"){
       var arrayCostCtFixed = fixArrayCostCT();
       var image = Math.floor(Math.random() * arrayCostCtFixed.length);
@@ -104,10 +128,11 @@ function changeImage(){
       var Cost = image;
       document.getElementById("output").innerHTML ="$" + arrayCostCtFixed[Cost];
       document.getElementById("output").style.display = "inline-block";
+      var audio = new Audio('sound.mp3');
+      audio.play();
     }
 
   else{
-    // Om selectorn visar "T"
       var arrayCostTFixed = fixArrayCostT();
       var image = Math.floor(Math.random() * arrayCostTFixed.length);
       var newImageArrayT = fixArrayImageT();
@@ -115,14 +140,23 @@ function changeImage(){
       var Cost = image;
       document.getElementById("output").innerHTML ="$" + arrayCostTFixed[Cost];}
       document.getElementById("output").style.display = "inline-block";
+      var audio = new Audio('sound.mp3');
+      audio.play();
 }
-// När användaren byter sida med selectorn.
 function resetImage(){
   document.getElementById('mainImage');
   myImage.setAttribute("src", "img/csgo.png");
+
+  // Kan vara broken
   document.getElementById('output').innerHTML = null;
   document.getElementById("output").style.display = "none";
 }
+
+function balanceInput(){
+  var balance = document.getElementById('balance').innerHTML;
+  document.write(balance);
+}
+
     </script>
     <br>
     <br>
