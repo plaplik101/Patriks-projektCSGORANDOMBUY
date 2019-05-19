@@ -1,0 +1,20 @@
+body{
+  background-image: url("img/background.jpg");
+
+}
+
+#content{
+  background-color: #2e3e4e;
+  display: inline-block;
+  border-radius: 15px;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  border: 15px groove #e3e3e3;
+}
+
+#output{
+  display: none;
+  background-color: white;
+  padding: 3px;
+  border-radius: 5px;
+}
